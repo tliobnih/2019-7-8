@@ -12,11 +12,14 @@ Introduction : Hi大家好<p>
 # Week1
 [投影片](https://youtu.be/w3jLJU7DT5E)
 
-### Progress
+### Progress（7/8）
 * In Class
     * 課程介紹
     * 建立 Github帳號
     * 建立 README.md欓
+    * 安裝 R&RStudio
+    * 建立一個 RMarkdown
+    * 上傳一個 RMarkdown欓 至 Github
    
 * At Home
     
