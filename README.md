@@ -17,3 +17,5 @@ Schedule
 ----
 [week1]
 ----
+投影片
+（https://youtu.be/w3jLJU7DT5E）
