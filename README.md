@@ -20,7 +20,7 @@ Introduction : Hi大家好<p>
     * 建立 README.md欓
     * 安裝 R&RStudio
     * 建立一個 RMarkdown
-    * 上傳一個 RMarkdown欓 至 Github
+    * 上傳 RMarkdown欓至Github
    
 * At Home
     
