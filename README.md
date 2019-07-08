@@ -1,7 +1,7 @@
 2019summer
 ----
-Announcement</b>
-陳樞元</b>
+Announcement
+陳樞元
 台師大數學系
 ----
 Schedule
