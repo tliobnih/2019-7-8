@@ -1,21 +1,15 @@
-2019 Summer
-----
-Announcement
-----
-Course : 資料科學程式設計
+# 2019 Summer
 
-Name : 陳樞元
+# Announcement
+Course : 資料科學程式設計<p>
+Name : 陳樞元<p>
+Student ID : 40640329s<p>
+Department : 台師大數學系<p>
+Introduction : Hi大家好<p>
 
-Student ID : 40640329s
+# Schedule
 
-Department : 台師大數學系
-
-Introduction : Hi大家好
-
-
-Schedule
-----
-# Week1 #
+# Week1
 [投影片](https://youtu.be/w3jLJU7DT5E)
 
 ### Progress ###
