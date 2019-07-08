@@ -7,8 +7,6 @@ Student ID : 40640329s<p>
 Department : 台師大數學系<p>
 Introduction : Hi大家好<p>
 
-# Schedule
-
 # Week1
 [投影片](https://youtu.be/w3jLJU7DT5E)
 
