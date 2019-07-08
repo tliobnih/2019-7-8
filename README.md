@@ -2,11 +2,11 @@
 ----
 Announcement
 ----
-Student:陳樞元
-
-Department:台師大數學系
-
-Id:40640329s
+*Course : 108夏季學院─資料科學程式設計
+*Name : 陳樞元
+Student ID : 40640329s
+Department : 台師大數學系
+Introduction : Hi大家好
 
 
 Schedule
