@@ -15,13 +15,14 @@ Introduction : Hi大家好
 
 Schedule
 ----
-# week1 #
+# Week1 #
 [投影片](https://youtu.be/w3jLJU7DT5E)
 
 ### Progress ###
 - In Class
     - Course Intro
     - Create Github Account
+    -
    
 - At Home
     
