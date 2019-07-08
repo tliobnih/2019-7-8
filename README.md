@@ -12,13 +12,13 @@ Introduction : Hi大家好<p>
 # Week1
 [投影片](https://youtu.be/w3jLJU7DT5E)
 
-### Progress ###
-- In Class
-    - Course Intro
-    - Create Github Account
-    -
+### Progress
+* In Class
+    * Course Intro
+    * Create Github Account
+    *
    
-- At Home
+* At Home
     
 # Week2
 # Week3
