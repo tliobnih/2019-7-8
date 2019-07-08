@@ -1,9 +1,9 @@
-#2019summer
+2019summer
 ----
 介紹
 陳樞元
 台師大數學系
 ----
-##Schedule
+Schedule
 ----
-##week1
+week1
