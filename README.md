@@ -10,6 +10,8 @@ Introduction : Hi大家好<p>
 # Schedule
 
 # Week1
+
+## 7/8
 [投影片](https://youtu.be/w3jLJU7DT5E)
 
 ### Progress
