@@ -18,7 +18,7 @@ Introduction : Hi大家好<p>
     * 建立 README.md欓
     * 安裝 R&RStudio
     * 建立一個 RMarkdown
-    * 上傳 [RMarkdown]欓至Github
+    * 上傳 [RMarkdown](https://github.com/tliobnih/2019-7-8/blob/master/Week1/test.html)欓至Github
    
 * At Home
     
