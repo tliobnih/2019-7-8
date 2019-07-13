@@ -21,7 +21,10 @@ Introduction : Hi大家好<p>
     * 上傳 [RMarkdown](https://tliobnih.github.io/2019-7-8/Week1/test.html)欓至Github
    
 * At Home
+>7/11
+* In Class
     
+    * [hw1](https://tliobnih.github.io/2019-7-8/Week2/hw1.html)
 # Week2
 # Week3
 # Week4
