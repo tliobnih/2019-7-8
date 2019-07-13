@@ -4,6 +4,7 @@ author: "陳樞元"
 date: "2019/7/11"
 output: html_document
 ---
+# Q:當地犯罪數是否與人口有關聯?
 ###### [桃園市刑事案件分類發生數、破獲數及嫌疑犯人數](https://data.gov.tw/dataset/25883)
 
 ###### [桃園市政府警察局轄區現住人口、性別比例及人口密度](https://data.gov.tw/dataset/26053)
@@ -19,31 +20,28 @@ library(reshape)
 a <- read_csv("桃園市刑事案件分類發生數、破獲數及嫌疑犯人數.csv")
 ra <- filter(a, breau %in% c("桃園分局", "大園分局","大溪分局","中壢分局","楊梅分局","平鎮分局","龜山分局","八德分局","龍潭分局","蘆竹分局"))
 ```
-# 取犯罪平均數
+# 取刑事平均數
 ```{r}
-ra %>% 
+crime <- (ra %>% 
 group_by(breau) %>%
-  summarise(avg_h_count = mean(h_count))
-crime <- aggregate(ra$h_count, by = list(ra$breau), FUN = mean)
+  summarise(avg_h_count = mean(h_count)))
 ```
-# 載入並整理各區人口密度
+# 載入各區人口密度
 ```{r}
 people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及人口密度.csv")
-rpeople <- filter(people, breau %in% c("桃園分局", "大園分局","大溪分局","中壢分局","楊梅分局","平鎮分局","龜山分局","八德分局","龍潭分局","蘆竹分局"))
 ```
 # 取人口密度平均數
 ```{r}
-rpeople %>%
+popular <- (people %>%
 group_by(breau) %>%
-  summarise(avg_density = mean(density))
-popular <- aggregate(rpeople$density, by = list(rpeople$breau), FUN = mean)
+  summarise(avg_density = mean(density)))
 ```
-# 結合兩個資料
+# 結合資料
 ```{r}
-combine <- bind_cols(crime,popular)
+combine <- merge(crime, popular, all = FALSE)
+final <- select(combine, breau, avg_density, avg_h_count)
 ```
-# 改欄目名稱
+# 修改欄目名稱
 ```{r}
-final <- select(combine, Group.1, x, x1)
-finally <- rename(final,c(Group.1 = "各區",x = "犯罪次數",x1 = "各區人口"))
+rename(final,c(breau = "各區",avg_density = "犯罪次數",avg_h_count = "各區人口"))
 ```

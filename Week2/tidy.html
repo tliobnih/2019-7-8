@@ -381,11 +381,14 @@ $(document).ready(function () {
 </div>
 
 
+<div id="q" class="section level1">
+<h1>Q:當地犯罪數是否與人口有關聯?</h1>
 <div id="section" class="section level6">
 <h6><a href="https://data.gov.tw/dataset/25883">桃園市刑事案件分類發生數、破獲數及嫌疑犯人數</a></h6>
 </div>
 <div id="section-1" class="section level6">
 <h6><a href="https://data.gov.tw/dataset/26053">桃園市政府警察局轄區現住人口、性別比例及人口密度</a></h6>
+</div>
 </div>
 <div id="section-2" class="section level1">
 <h1>載入套件</h1>
@@ -421,27 +424,13 @@ library(dplyr)</code></pre>
 <pre class="r"><code>ra &lt;- filter(a, breau %in% c(&quot;桃園分局&quot;, &quot;大園分局&quot;,&quot;大溪分局&quot;,&quot;中壢分局&quot;,&quot;楊梅分局&quot;,&quot;平鎮分局&quot;,&quot;龜山分局&quot;,&quot;八德分局&quot;,&quot;龍潭分局&quot;,&quot;蘆竹分局&quot;))</code></pre>
 </div>
 <div id="section-4" class="section level1">
-<h1>取犯罪平均數</h1>
-<pre class="r"><code>ra %&gt;% 
+<h1>取刑事平均數</h1>
+<pre class="r"><code>crime &lt;- (ra %&gt;% 
 group_by(breau) %&gt;%
-  summarise(avg_h_count = mean(h_count))</code></pre>
-<pre><code>## # A tibble: 10 x 2
-##    breau    avg_h_count
-##    &lt;chr&gt;          &lt;dbl&gt;
-##  1 八德分局        50.7
-##  2 大園分局        31.4
-##  3 大溪分局        36.4
-##  4 中壢分局       147. 
-##  5 平鎮分局        50.6
-##  6 桃園分局       148. 
-##  7 楊梅分局        35.0
-##  8 龍潭分局        35.9
-##  9 龜山分局        52.7
-## 10 蘆竹分局        35.3</code></pre>
-<pre class="r"><code>crime &lt;- aggregate(ra$h_count, by = list(ra$breau), FUN = mean)</code></pre>
+  summarise(avg_h_count = mean(h_count)))</code></pre>
 </div>
 <div id="section-5" class="section level1">
-<h1>載入並整理各區人口密度</h1>
+<h1>載入各區人口密度</h1>
 <pre class="r"><code>people &lt;- read_csv(&quot;桃園市政府警察局轄區現住人口、性別比例及人口密度.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -455,36 +444,32 @@ group_by(breau) %&gt;%
 ##   proportion = col_double(),
 ##   density = col_number()
 ## )</code></pre>
-<pre class="r"><code>rpeople &lt;- filter(people, breau %in% c(&quot;桃園分局&quot;, &quot;大園分局&quot;,&quot;大溪分局&quot;,&quot;中壢分局&quot;,&quot;楊梅分局&quot;,&quot;平鎮分局&quot;,&quot;龜山分局&quot;,&quot;八德分局&quot;,&quot;龍潭分局&quot;,&quot;蘆竹分局&quot;))</code></pre>
 </div>
 <div id="section-6" class="section level1">
 <h1>取人口密度平均數</h1>
-<pre class="r"><code>rpeople %&gt;%
+<pre class="r"><code>popular &lt;- (people %&gt;%
 group_by(breau) %&gt;%
-  summarise(avg_density = mean(density))</code></pre>
-<pre><code>## # A tibble: 10 x 2
-##    breau    avg_density
-##    &lt;chr&gt;          &lt;dbl&gt;
-##  1 八德分局       5338.
-##  2 大園分局        836.
-##  3 大溪分局        228.
-##  4 中壢分局       4951.
-##  5 平鎮分局       4419.
-##  6 桃園分局      11936.
-##  7 楊梅分局       1138.
-##  8 龍潭分局       1538.
-##  9 龜山分局       1954.
-## 10 蘆竹分局       1978.</code></pre>
-<pre class="r"><code>popular &lt;- aggregate(rpeople$density, by = list(rpeople$breau), FUN = mean)</code></pre>
+  summarise(avg_density = mean(density)))</code></pre>
 </div>
 <div id="section-7" class="section level1">
-<h1>結合兩個資料</h1>
-<pre class="r"><code>combine &lt;- bind_cols(crime,popular)</code></pre>
+<h1>結合資料</h1>
+<pre class="r"><code>combine &lt;- merge(crime, popular, all = FALSE)
+final &lt;- select(combine, breau, avg_density, avg_h_count)</code></pre>
 </div>
 <div id="section-8" class="section level1">
-<h1>改欄目名稱</h1>
-<pre class="r"><code>final &lt;- select(combine, Group.1, x, x1)
-finally &lt;- rename(final,c(Group.1 = &quot;各區&quot;,x = &quot;犯罪次數&quot;,x1 = &quot;各區人口&quot;))</code></pre>
+<h1>修改欄目名稱</h1>
+<pre class="r"><code>rename(final,c(breau = &quot;各區&quot;,avg_density = &quot;犯罪次數&quot;,avg_h_count = &quot;各區人口&quot;))</code></pre>
+<pre><code>##        各區   犯罪次數  各區人口
+## 1  八德分局  5337.7300  50.67692
+## 2  大園分局   836.4833  31.44615
+## 3  大溪分局   227.8533  36.36923
+## 4  中壢分局  4951.1400 146.72308
+## 5  平鎮分局  4418.7333  50.63077
+## 6  桃園分局 11935.8567 148.15385
+## 7  楊梅分局  1138.1533  35.03077
+## 8  龍潭分局  1537.8000  35.93846
+## 9  龜山分局  1953.7400  52.72308
+## 10 蘆竹分局  1977.7933  35.27692</code></pre>
 </div>
 
 
