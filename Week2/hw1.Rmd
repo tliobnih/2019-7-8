@@ -1,7 +1,16 @@
+---
+title: "hw1"
+author: "陳樞元"
+date: "2019/7/11"
+output: html_document
+---
+[桃園市刑事案件分類發生數、破獲數及嫌疑犯人數](https://data.gov.tw/dataset/25883)
+[桃園市政府警察局轄區現住人口、性別比例及人口密度](https://data.gov.tw/dataset/26053)
+```{r}
 library(readr)
 library(dplyr)
 library(reshape)
-a <- read_csv("a.csv")
+a <- read_csv("桃園市刑事案件分類發生數、破獲數及嫌疑犯人數.csv")
 people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及人口密度.csv")
 ra <- filter(a, breau %in% c("桃園分局", "大園分局","大溪分局","中壢分局","楊梅分局","平鎮分局","龜山分局","八德分局","龍潭分局","蘆竹分局"))
 ra %>% 
