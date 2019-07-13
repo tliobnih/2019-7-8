@@ -1,0 +1,16 @@
+library(readr)
+library(dplyr)
+library(reshape)
+a <- read_csv("a.csv")
+ra <- filter(a, breau %in% c("桃園分局", "大園分局","大溪分局","中壢分局","楊梅分局","平鎮分局","龜山分局","八德分局","龍潭分局","蘆竹分局"))
+group_by(breau) %>%
+  summarise(avg_h_count = mean(h_count))
+crime <- aggregate(ra$h_count, by = list(ra$breau), FUN = mean)
+people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及人口密度.csv")
+rpeople <- filter(people, breau %in% c("桃園分局", "大園分局","大溪分局","中壢分局","楊梅分局","平鎮分局","龜山分局","八德分局","龍潭分局","蘆竹分局"))
+group_by(breau) %>%
+  summarise(avg_density = mean(density))
+popular <- aggregate(rpeople$density, by = list(rpeople$breau), FUN = mean)
+combine <- bind_cols(crime,popular)
+final <- select(combine, Group.1, x, x1)
+finally <- rename(final,c(Group.1 = "各區",x = "犯罪次數",x1 = "各區人口"))
