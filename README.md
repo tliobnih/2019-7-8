@@ -12,7 +12,7 @@ Introduction : Hi大家好<p>
 ### Progress
 >7/8
 * In Class
-    * [hw0](https://tliobnih.github.io/2019-7-8/Week1/test.html)欓至Github
+    * [hw0](https://tliobnih.github.io/2019-7-8/Week1/test.html)
 >7/11
 * In Class
     * [hw1](https://tliobnih.github.io/2019-7-8/Week2/tidy.html)
