@@ -15,33 +15,34 @@ library(readr)
 library(dplyr)
 library(reshape)
 ```
-# 載入並整理桃園刑事案件數
+# 載入桃園刑事案件數
 ```{r}
 a <- read_csv("桃園市刑事案件分類發生數、破獲數及嫌疑犯人數.csv")
-ra <- filter(a, breau %in% c("桃園分局", "大園分局","大溪分局","中壢分局","楊梅分局","平鎮分局","龜山分局","八德分局","龍潭分局","蘆竹分局"))
 ```
 # 取刑事平均數
 ```{r}
-crime <- (ra %>% 
+crime <- a %>% 
 group_by(breau) %>%
-  summarise(avg_h_count = mean(h_count)))
+  summarise(avg_h_count = mean(h_count))
 ```
 # 載入各區人口密度
 ```{r}
 people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及人口密度.csv")
 ```
-# 取人口密度平均數
+# 取人口密度平均數並整理
 ```{r}
-popular <- (people %>%
+popular <- people %>%
 group_by(breau) %>%
-  summarise(avg_density = mean(density)))
+  summarise(avg_density = mean(density))
+
+rpopular <- popular[-6,]
 ```
-# 結合資料
+# 結合並整理資料
 ```{r}
-combine <- merge(crime, popular, all = FALSE)
+combine <- merge(crime, rpopular, all = FALSE)
 final <- select(combine, breau, avg_density, avg_h_count)
 ```
 # 修改欄目名稱
 ```{r}
-rename(final,c(breau = "各區",avg_density = "犯罪次數",avg_h_count = "各區人口"))
+rename(final,c(breau = "轄區",avg_density = "犯罪次數",avg_h_count = "人口密度"))
 ```
