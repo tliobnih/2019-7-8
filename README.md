@@ -13,17 +13,9 @@ Introduction : Hi大家好<p>
 ### Progress
 >7/8
 * In Class
-    * 課程介紹
-    * 建立 Github帳號
-    * 建立 README.md欓
-    * 安裝 R&RStudio
-    * 建立一個 RMarkdown
-    * 上傳 [RMarkdown](https://tliobnih.github.io/2019-7-8/Week1/test.html)欓至Github
-   
-* At Home
+    * [hw0](https://tliobnih.github.io/2019-7-8/Week1/test.html)欓至Github
 >7/11
 * In Class
-    
     * [hw1](https://tliobnih.github.io/2019-7-8/Week2/tidy.html)
 # Week3
 # Week4
