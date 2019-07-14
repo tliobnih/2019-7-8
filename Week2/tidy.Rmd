@@ -4,7 +4,7 @@ author: "陳樞元"
 date: "2019/7/11"
 output: html_document
 ---
-# Q:當地犯罪數是否與人口密度有關聯?
+# Q:當地犯罪數是否與總人口數有關聯?
 ###### [桃園市刑事案件分類發生數、破獲數及嫌疑犯人數](https://data.gov.tw/dataset/25883)
 
 ###### [桃園市政府警察局轄區現住人口、性別比例及人口密度](https://data.gov.tw/dataset/26053)
@@ -27,9 +27,9 @@ group_by(breau) %>%
 
 crime <- crime%>%
 group_by(breau) %>%
-  summarise(i = round(avg_h_count))
+  summarise(h = round(avg_h_count))
 ```
-# 載入各區人口密度
+# 載入各區人口
 ```{r}
 people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及人口密度.csv")
 ```
@@ -37,11 +37,11 @@ people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及
 ```{r}
 people <- people %>%
 group_by(breau) %>%
-  summarise(avg_density = mean(density))
-
+  summarise(avg_residence = mean(residence))
+            
 people <- people%>%
 group_by(breau) %>%
-  summarise(d = round(avg_density))
+  summarise(r = round(avg_residence))
 
 people <- people[-6,]
 ```
@@ -49,9 +49,9 @@ people <- people[-6,]
 ```{r}
 combine <- merge(crime, people, all = FALSE)
 
-final <- select(combine, breau, d, i)
+final <- select(combine, breau, h, r)
 ```
 # 修改欄目名稱
 ```{r}
-rename(final,c(breau = "轄區",d = "犯罪數",i = "人口密度(人口數/平方公里)"))
+rename(final,c(breau = "轄區",h = "犯罪數",r = "總人口"))
 ```

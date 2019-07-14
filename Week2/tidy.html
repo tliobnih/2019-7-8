@@ -382,7 +382,7 @@ $(document).ready(function () {
 
 
 <div id="q" class="section level1">
-<h1>Q:當地犯罪數是否與人口密度有關聯?</h1>
+<h1>Q:當地犯罪數是否與總人口數有關聯?</h1>
 <div id="section" class="section level6">
 <h6><a href="https://data.gov.tw/dataset/25883">桃園市刑事案件分類發生數、破獲數及嫌疑犯人數</a></h6>
 </div>
@@ -430,10 +430,10 @@ group_by(breau) %&gt;%
 
 crime &lt;- crime%&gt;%
 group_by(breau) %&gt;%
-  summarise(i = round(avg_h_count))</code></pre>
+  summarise(h = round(avg_h_count))</code></pre>
 </div>
 <div id="section-5" class="section level1">
-<h1>載入各區人口密度</h1>
+<h1>載入各區人口</h1>
 <pre class="r"><code>people &lt;- read_csv(&quot;桃園市政府警察局轄區現住人口、性別比例及人口密度.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -452,11 +452,11 @@ group_by(breau) %&gt;%
 <h1>整理資料(取平均、四捨五入、刪除欄目)</h1>
 <pre class="r"><code>people &lt;- people %&gt;%
 group_by(breau) %&gt;%
-  summarise(avg_density = mean(density))
-
+  summarise(avg_residence = mean(residence))
+            
 people &lt;- people%&gt;%
 group_by(breau) %&gt;%
-  summarise(d = round(avg_density))
+  summarise(r = round(avg_residence))
 
 people &lt;- people[-6,]</code></pre>
 </div>
@@ -464,22 +464,22 @@ people &lt;- people[-6,]</code></pre>
 <h1>結合並選取欄目</h1>
 <pre class="r"><code>combine &lt;- merge(crime, people, all = FALSE)
 
-final &lt;- select(combine, breau, d, i)</code></pre>
+final &lt;- select(combine, breau, h, r)</code></pre>
 </div>
 <div id="section-8" class="section level1">
 <h1>修改欄目名稱</h1>
-<pre class="r"><code>rename(final,c(breau = &quot;轄區&quot;,d = &quot;犯罪數&quot;,i = &quot;人口密度(人口數/平方公里)&quot;))</code></pre>
-<pre><code>##        轄區 犯罪數 人口密度(人口數/平方公里)
-## 1  八德分局   5338                        51
-## 2  大園分局    836                        31
-## 3  大溪分局    228                        36
-## 4  中壢分局   4951                       147
-## 5  平鎮分局   4419                        51
-## 6  桃園分局  11936                       148
-## 7  楊梅分局   1138                        35
-## 8  龍潭分局   1538                        36
-## 9  龜山分局   1954                        53
-## 10 蘆竹分局   1978                        35</code></pre>
+<pre class="r"><code>rename(final,c(breau = &quot;轄區&quot;,h = &quot;犯罪數&quot;,r = &quot;總人口&quot;))</code></pre>
+<pre><code>##        轄區 犯罪數 總人口
+## 1  八德分局     51  62067
+## 2  大園分局     31  48753
+## 3  大溪分局     36  34121
+## 4  中壢分局    147 135951
+## 5  平鎮分局     51  70771
+## 6  桃園分局    148 153283
+## 7  楊梅分局     35  67843
+## 8  龍潭分局     36  38532
+## 9  龜山分局     53  53212
+## 10 蘆竹分局     35  52605</code></pre>
 </div>
 
 
