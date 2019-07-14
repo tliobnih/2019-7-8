@@ -410,8 +410,8 @@ library(dplyr)</code></pre>
 ##     rename</code></pre>
 </div>
 <div id="section-3" class="section level1">
-<h1>載入桃園刑事案件數</h1>
-<pre class="r"><code>a &lt;- read_csv(&quot;桃園市刑事案件分類發生數、破獲數及嫌疑犯人數.csv&quot;)</code></pre>
+<h1>載入各區刑事案件數</h1>
+<pre class="r"><code>crime &lt;- read_csv(&quot;桃園市刑事案件分類發生數、破獲數及嫌疑犯人數.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   year = col_double(),
@@ -423,10 +423,14 @@ library(dplyr)</code></pre>
 ## )</code></pre>
 </div>
 <div id="section-4" class="section level1">
-<h1>取刑事平均數</h1>
-<pre class="r"><code>crime &lt;- a %&gt;% 
+<h1>整理資料(取平均、四捨五入)</h1>
+<pre class="r"><code>crime &lt;- crime %&gt;% 
 group_by(breau) %&gt;%
-  summarise(avg_h_count = mean(h_count))</code></pre>
+  summarise(avg_h_count = mean(h_count))
+
+crime &lt;- crime%&gt;%
+group_by(breau) %&gt;%
+  summarise(i = round(avg_h_count))</code></pre>
 </div>
 <div id="section-5" class="section level1">
 <h1>載入各區人口密度</h1>
@@ -445,32 +449,37 @@ group_by(breau) %&gt;%
 ## )</code></pre>
 </div>
 <div id="section-6" class="section level1">
-<h1>取人口密度平均數並整理</h1>
-<pre class="r"><code>popular &lt;- people %&gt;%
+<h1>整理資料(取平均、四捨五入、刪除欄目)</h1>
+<pre class="r"><code>people &lt;- people %&gt;%
 group_by(breau) %&gt;%
   summarise(avg_density = mean(density))
 
-rpopular &lt;- popular[-6,]</code></pre>
+people &lt;- people%&gt;%
+group_by(breau) %&gt;%
+  summarise(d = round(avg_density))
+
+people &lt;- people[-6,]</code></pre>
 </div>
 <div id="section-7" class="section level1">
-<h1>結合並整理資料</h1>
-<pre class="r"><code>combine &lt;- merge(crime, rpopular, all = FALSE)
-final &lt;- select(combine, breau, avg_density, avg_h_count)</code></pre>
+<h1>結合並選取欄目</h1>
+<pre class="r"><code>combine &lt;- merge(crime, people, all = FALSE)
+
+final &lt;- select(combine, breau, d, i)</code></pre>
 </div>
 <div id="section-8" class="section level1">
 <h1>修改欄目名稱</h1>
-<pre class="r"><code>rename(final,c(breau = &quot;轄區&quot;,avg_density = &quot;犯罪次數&quot;,avg_h_count = &quot;人口密度&quot;))</code></pre>
-<pre><code>##        轄區   犯罪次數  人口密度
-## 1  八德分局  5337.7300  50.67692
-## 2  大園分局   836.4833  31.44615
-## 3  大溪分局   227.8533  36.36923
-## 4  中壢分局  4951.1400 146.72308
-## 5  平鎮分局  4418.7333  50.63077
-## 6  桃園分局 11935.8567 148.15385
-## 7  楊梅分局  1138.1533  35.03077
-## 8  龍潭分局  1537.8000  35.93846
-## 9  龜山分局  1953.7400  52.72308
-## 10 蘆竹分局  1977.7933  35.27692</code></pre>
+<pre class="r"><code>rename(final,c(breau = &quot;轄區&quot;,d = &quot;犯罪數&quot;,i = &quot;人口密度(人口數/平方公里)&quot;))</code></pre>
+<pre><code>##        轄區 犯罪數 人口密度(人口數/平方公里)
+## 1  八德分局   5338                        51
+## 2  大園分局    836                        31
+## 3  大溪分局    228                        36
+## 4  中壢分局   4951                       147
+## 5  平鎮分局   4419                        51
+## 6  桃園分局  11936                       148
+## 7  楊梅分局   1138                        35
+## 8  龍潭分局   1538                        36
+## 9  龜山分局   1954                        53
+## 10 蘆竹分局   1978                        35</code></pre>
 </div>
 
 
