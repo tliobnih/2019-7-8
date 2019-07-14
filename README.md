@@ -8,7 +8,6 @@ Department : 台師大數學系 大三<p>
 Introduction : Hi大家好<p>
 
 # Week1
-[投影片](https://youtu.be/w3jLJU7DT5E)
 
 ### Progress
 >7/8
