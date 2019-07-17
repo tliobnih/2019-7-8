@@ -2,7 +2,7 @@
 title: "hw2-2"
 output: html_document
 ---
-繼[hw2-1](https://tliobnih.github.io/2019-7-8/Week2/21.html)
+繼hw2-1
 
 ### 載入套件
 ```{r}
