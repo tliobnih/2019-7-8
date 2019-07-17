@@ -1,0 +1,58 @@
+---
+title: "hw2-2"
+output: html_document
+---
+繼[hw2-1]()
+
+### 載入套件
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+### 載入資料
+```{r}
+crime <- read_csv("桃園市刑事案件分類發生數、破獲數及嫌疑犯人數.csv")
+people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及人口密度.csv")
+```
+### 整理資料
+```{r}
+#選取欄目
+crime <- filter(crime, breau == "全區")
+crime <- filter(crime, type == "全種類")
+#增加欄目
+crime <-crime %>% 
+    mutate(rem_proportion = a_count / h_count)
+#選取欄目
+people <- filter(people, breau == "全區")
+#結合表格
+combine <- merge(crime, people, all = FALSE)
+#排序年分順序
+combine <- combine[order(combine$year),]
+```
+# 91-103年**居住人口**與**犯案數**之變化圖
+居住人口逐年上升->理應犯案數逐年上升，然而94年之後犯罪數卻逐年下降->94年以前的移居住民易有犯罪行為(較94年之後的移居住民)
+```{r}
+ggplot(data = combine,aes(x=year)) +
+  geom_point(aes(y=h_count*40)) + 
+  geom_line(aes(y=h_count*40, color="犯案數"))+
+  geom_point(aes(y=residence)) + 
+  geom_line(aes(y=residence, color="居住人口"))+
+    labs(title="91-103年居住人口與犯案數之變化圖",y="count")
+```
+
+# 91-103年**居住人口**與**破案比**之變化圖
+居住人口逐年上升->理應更難破案，然而卻更容易破案->新移居住民可能對環境較不熟，故較容易被抓OAO
+
+*註：1.破案比＝破獲數/犯案數 2.變量有乘係數使斜率更為陡峭，便於觀察*
+```{r}
+ggplot(data = combine,aes(x=year)) +
+  geom_point(aes(y=rem_proportion*10000000), ) + 
+  geom_line(aes(y=rem_proportion*10000000, color="破案比")) +
+  geom_point(aes(y=residence*10)) + 
+  geom_line(aes(y=residence*10, color="居住人口"))+
+    labs(title="91-103年居住人口與[破獲數/犯案數]之變化圖",y="count") 
+```
+
+# **總結**
+由此數據發現犯罪人口的增加與人口增加其實不是正相關的結果，也就是犯罪人口其實有其獨特性，與我們的習慣性認知並不完全相符。

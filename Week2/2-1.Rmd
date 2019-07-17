@@ -1,0 +1,175 @@
+---
+title: "hw2-1"
+output: html_document
+---
+###### [桃園市刑事案件分類發生數、破獲數及嫌疑犯人數](https://data.gov.tw/dataset/25883)
+
+###### [桃園市政府警察局轄區現住人口、性別比例及人口密度](https://data.gov.tw/dataset/26053)
+### 載入套件
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(wordcloud2)
+library(grid) 
+```
+### 載入資料
+```{r}
+crime <- read_csv("桃園市刑事案件分類發生數、破獲數及嫌疑犯人數.csv")
+people <- read_csv("桃園市政府警察局轄區現住人口、性別比例及人口密度.csv")
+```
+### 資料1
+```{r}
+#選取欄目
+bad <- filter(crime, breau == "全區")
+bad <- bad[17:1024,] 
+bad <- filter(bad , year >= 103)
+sad <- select(bad, type, h_count)
+# 取平均
+Bad <- bad %>%
+group_by(type) %>%
+  summarise(avg_h_count = mean(h_count))
+```
+### 資料2
+```{r}
+#刪除欄目
+j <- 1 
+Crime <- crime[1,]
+  for (i in 1:1756){
+    if(!(grepl("全區", crime$breau[i]))&&!(grepl("其他", crime$breau[i]))){
+      Crime[j,]<-crime[i,]
+      j<-j+1
+    }
+  }                                        
+#選取欄目
+Crime <- filter(Crime, h_count >= 50) 
+#刪除欄目
+k <- 1
+ CCrime <- Crime[1,]
+   for (l in 1:82){
+     if(!(grepl("全種類", Crime$type[l]))&&!(grepl("其他", Crime$type[l]))){
+       CCrime[k,]<-Crime[l,]
+       k<-k+1
+     }
+   }     
+#選取欄目
+CCCrime <- select(CCrime, breau, h_count) 
+```
+### 資料3
+```{r}
+#選取欄目
+people1 <- people[34:34,]
+people2 <- people[37:37,]
+combine <- merge(people1, people2, all = TRUE)
+combine <- select(combine, breau, residence ,density) 
+#選取欄目
+crime1 <- crime[17:17,]
+crime2 <- crime[20:20,]
+combine1 <- merge(crime1, crime2, all = TRUE)
+combine1 <- select(combine1, breau, h_count)
+#合成表格
+combine2 <- merge(combine, combine1, all = TRUE)
+#增加欄目
+combine2 <-combine2 %>% 
+    mutate(h_r=h_count/ residence )
+
+```
+### 合成圖表之函數
+```{r}
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) { 
+   plots <- c(list(...), plotlist) 
+ numPlots = length(plots) 
+  if (is.null(layout)) {layout <- matrix(seq(1, cols * ceiling(numPlots/cols)), ncol = cols, nrow = ceiling(numPlots/cols))} 
+  if (numPlots==1) {print(plots[[1]])}
+ else {grid.newpage() 
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout)))) 
+    for (i in 1:numPlots) { 
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE)) 
+ 
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row, 
+                                      layout.pos.col = matchidx$col)) 
+    } 
+  } 
+}
+```
+# 88-103年各種犯案多寡
+以下為88-103年的犯罪種類和次數，最高次數是公共危險(5128)，再來是機車竊盜(3068)，最後是普通竊盜(3038)
+```{r}
+wordcloud2(Bad,size = 0.6)
+```
+
+# 各種犯罪次數
+由圖可知103年犯案次數高於50筆的犯案種類，
+
+且公共危險(綠色)是最常發生的案件
+
+第二名是普通竊盜(天藍)
+
+第三名是機車竊盜(粉紅)和二級毒品(紅棕))
+```{r}
+qplot(x=breau, y=h_count, data=CCrime, geom="point",
+      main = "轄區與犯案數之點陣圖", xlab="轄區", ylab="犯案數", color= type)
+```
+
+# 各區犯罪次數(103年)
+上、上上張圖得出最常犯的犯罪種類，現在我們觀察前四名犯罪之圓餅圖:公共危險、普通竊盜、機車竊盜、二級毒品
+
+能看出最高犯罪次數皆為:**中壢**(綠色)、**桃園**(天藍)
+```{r}
+CCCrime <- CCrime[62:70,]
+pie <- ggplot(data=CCCrime) +
+    geom_bar(aes(x=factor(1),y=h_count,fill=breau),stat = "identity") +
+    coord_polar("y", start=0)+
+    labs(title="公共危險") 
+pie1 <- pie + theme_void()
+
+CCCrime <- CCrime[1:10,]
+pie <- ggplot(data=CCCrime) +
+    geom_bar(aes(x=factor(1),y=h_count,fill=breau),stat = "identity") +
+    coord_polar("y", start=0)+
+    labs(title="普通竊盜") 
+pie2 <-pie + theme_void()
+
+CCCrime <- CCrime[20:29,]
+pie <- ggplot(data=CCCrime) +
+    geom_bar(aes(x=factor(1),y=h_count,fill=breau),stat = "identity") +
+    coord_polar("y", start=0)+
+    labs(title="機車竊盜") 
+pie3 <-pie + theme_void()
+
+CCCrime <- CCrime[47:56,]
+pie <- ggplot(data=CCCrime) +
+    geom_bar(aes(x=factor(1),y=h_count,fill=breau),stat = "identity") +
+    coord_polar("y", start=0)+
+    labs(title="二級毒品") 
+pie4 <-pie + theme_void()
+multiplot(pie1, pie2, pie3, pie4,cols=2)
+```
+
+# 犯罪率與人口密度之間的關係
+上張圖得出最高犯罪數為:**中壢**、**桃園**，因此我們來探討**中壢**、**桃園**之犯罪率與人口密度之間的關係
+
+由圖可知中壢人口密度雖較低，但犯罪率卻高出桃園許多->中壢人較易犯罪->由中壢與桃園的現象，可以發現到犯罪人口亦吸引犯罪人口的增加
+
+*註：１.犯罪率＝犯罪總數／總人口 2.此犯罪率有乘以倍數，為了使桃園人口密度＝桃園犯罪率，便於看出中壢之差異性*
+
+```{r}
+
+p1 <- ggplot(data=combine2)+ 
+  geom_bar(mapping = aes(x = breau, y = density), stat = "identity")+
+    labs(title="中壢與桃園之人口密度",
+         x="轄區",
+         y="人口密度") 
+p2 <- ggplot(data=combine2)+ 
+  geom_bar(mapping = aes(x = breau, y = h_r*390404.811073), stat = "identity")+
+    labs(title="中壢與桃園之犯罪率",
+         x="轄區",
+         y="犯罪率") 
+
+multiplot(p1, p2, cols=1)
+
+```
+
+# **小節**
+
+經過犯罪人數與總人數的相關統計資訊，令人好奇是否人口成長與犯罪成長存在著正相關關係，若對此有興趣請參考[hw2-2]()
