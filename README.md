@@ -19,6 +19,6 @@ Introduction : Hi大家好<p>
 # Week2
 >7/15
 * In Class
-    * [hw2-1](https://tliobnih.github.io/2019-7-8/Week2/hw2.html)
+    * [hw2-1](https://tliobnih.github.io/2019-7-8/Week2/hw1.html)
 # Week3
 # Week4
