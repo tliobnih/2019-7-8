@@ -1,0 +1,23 @@
+---
+title: "神鵰俠侶電子書.1"
+output: html_document
+---
+```{r}
+library(jiebaR)
+library(dplyr)
+library(ggplot2)
+book <-readr:: read_file("/Users/pro430g2/Documents/book/1.txt")
+mixseg = worker()
+jieba_tokenizer=function(d){
+  unlist(segment(d[[1]],mixseg))
+}
+seg = lapply(book, jieba_tokenizer)
+freqFrame = as.data.frame(table(unlist(seg)))
+freqFrame = freqFrame[order(freqFrame$Freq,decreasing=TRUE), ]
+
+freqFrame =filter(freqFrame, Freq>= 11)
+freqFrame <- freqFrame[16:128,]
+freqFrame <- filter(freqFrame, Var1 %in% c("陸立鼎", "陸無雙","怪客","武三娘","武修文","陸","夫婦","李莫愁","自己","女孩","柯鎮惡","死","老者","二娘","程英","父親","拂塵","道姑","爹爹","婦人","女兒","武三通","哥哥","鐵杖","	男孩","身子","兄嫂","老伯伯","拙夫","郭靖","當下","過去"))
+wordcloud2::wordcloud2(freqFrame)
+ggplot(freqFrame, aes(x = Var1, y = Freq)) + geom_bar(stat="identity")
+```
