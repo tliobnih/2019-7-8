@@ -1,0 +1,11 @@
+---
+title: "genres"
+output: html_document
+---
+
+```{r}
+library(wordcloud2)
+book1 <-readr:: read_csv("/Users/pro430g2/Documents/genres_count.csv")
+
+wordcloud2(data = book1, size = 0.8)
+```
