@@ -27,4 +27,4 @@ Introduction : Hi大家好<p>
 # Week3
 >7/23
     * [keyword](https://tliobnih.github.io/2019-7-8/Week3/keyword.html)
-    * [genres](https://tliobnih.github.io/2019-7-8/Week3/genres.html)
+    * [genres](https://tliobnih.github.io/2019-7-8/Week3/1.html)
