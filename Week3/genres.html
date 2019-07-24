@@ -2557,12 +2557,12 @@ $(document).ready(function () {
 book1 &lt;-readr:: read_csv(&quot;/Users/pro430g2/Documents/genres_count.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
-##   Drama = col_character(),
-##   `2297` = col_double()
+##   genres = col_character(),
+##   count = col_double()
 ## )</code></pre>
-<pre class="r"><code>wordcloud2(book1)</code></pre>
-<div id="htmlwidget-422fbba98f5f9ba66558" style="width:672px;height:480px;" class="wordcloud2 html-widget"></div>
-<script type="application/json" data-for="htmlwidget-422fbba98f5f9ba66558">{"x":{"word":["Comedy","Thriller","Action","Romance","Adventure","Crime","Science Fiction","Horror","Family","Fantasy","Mystery","Animation","History","Music","War","Documentary","Western","Foreign","TV Movie"],"freq":[1722,1274,1154,894,790,696,535,519,513,424,348,234,197,185,144,110,82,34,8],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":0.104529616724739,"backgroundColor":"white","gridSize":0,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+<pre class="r"><code>wordcloud2(data = book1, size = 1)</code></pre>
+<div id="htmlwidget-87edc09d2a45f03013e4" style="width:672px;height:480px;" class="wordcloud2 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-87edc09d2a45f03013e4">{"x":{"word":["Drama","Comedy","Thriller","Action","Romance","Adventure","Crime","Science Fiction","Horror","Family","Fantasy","Mystery","Animation","History","Music","War","Documentary","Western","Foreign","TV Movie"],"freq":[2297,1722,1274,1154,894,790,696,535,519,513,424,348,234,197,185,144,110,82,34,8],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":0.0783630822812364,"backgroundColor":"white","gridSize":0,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
 
 
 
