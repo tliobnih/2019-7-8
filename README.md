@@ -7,7 +7,7 @@ Student ID : 40640329s<p>
 Department : 台師大數學系 大三<p>
 Introduction : Hi大家好<p>
 # python作業
-   https://tliobnih.github.io/2019-7-8/pythonhw/4a4b.html
+   https://tliobnih.github.io/2019-7-8/pythonhw/4a4b.
 
 # Week1
 
