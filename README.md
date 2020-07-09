@@ -31,4 +31,3 @@ Introduction : Hi大家好<p>
     * [1](https://tliobnih.github.io/2019-7-8/Week3/mov.html)
 # math
 https://tliobnih.github.io/2019-7-8//love/math.html
-
